@@ -20,6 +20,9 @@ else (MSVC)
 	set(CMAKE_CXX_FLAGS "-std=c++11")
 endif (MSVC)
 
+
+option(BUILD_EXAMPLES "Compile examples using MwENet" ON)
+
 # Source files.
 set(SOURCES_MW
 	src/mw/enetclient.cpp
@@ -41,19 +44,17 @@ find_package(ENet)
 if(ENet_NOT_FOUND)
   add_subdirectory(Enet)
   include_directories(Enet/src)
+  set(${ENet_LIBRARY} Enet)
   add_library(MwEnet Enet ${SOURCES_MW})
-
 else() # ENet is FOUND
   message("-- ENet was found!")
   include_directories(SYSTEM ${ENet_INCLUDE_DIRS})  
   add_library(MwEnet Enet ${SOURCES_MW})
-  target_link_libraries(${CMAKE_PROJECT_NAME} ${ENet_LIBRARY})
-
 endif()
 
+  target_link_libraries(${CMAKE_PROJECT_NAME} ${ENet_LIBRARY})
 
-
-
-
-
+if(BUILD_EXAMPLES)
+  add_subdirectory("${CMAKE_SOURCE_DIR}/examples/")
+endif()
 

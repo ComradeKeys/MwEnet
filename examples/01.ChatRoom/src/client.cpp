@@ -7,12 +7,8 @@
 bool run;
 
 int main(int argc, char *argv[]) {
-    std::string ip;
-    int port;
-    std::cout << "IP: ";
-    std::cin >> ip;
-    std::cout << "Port: ";
-    std::cin >> port;
+    std::string ip = "localhost";
+    int port = 12345;
 
     mw::EnetClient client(port, ip);
 

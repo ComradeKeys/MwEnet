@@ -10,47 +10,47 @@
 
 namespace mw {
 
-	class EnetServer : public EnetNetwork, public Server {
-	public:
-		EnetServer(int port, ServerInterface& serverInterface);
-		~EnetServer();
+class EnetServer : public EnetNetwork, public Server {
+public:
+    EnetServer(int port, ServerInterface &serverInterface);
+    ~EnetServer();
 
-		EnetServer(const EnetServer&) = delete;
-		EnetServer& operator=(const EnetServer&) = delete;
+    EnetServer(const EnetServer &) = delete;
+    EnetServer &operator=(const EnetServer &) = delete;
 
-		void serverPushToSendBuffer(const Packet& packet, PacketType type, int toId) override;
+    void serverPushToSendBuffer(const Packet &packet, PacketType type, int toId) override;
 
-		void serverPushToSendBuffer(const Packet& packet, PacketType type) override;
-		
-		void start() override;
-		
-		void stop() override;
+    void serverPushToSendBuffer(const Packet &packet, PacketType type) override;
 
-	protected:
-		void update();
+    void start() override;
 
-		InternalPacket receive(ENetEvent eNetEvent) override;
+    void stop() override;
 
-	private:
-		typedef std::pair<ENetPeer*, int> Pair; // first: Peer second: id.
+protected:
+    void update();
 
-		// Sends connectInfo to new connected client. Client is assigned
-		// the number id.
-		// char type = |CONNECT_INFO
-		// char id   = |id
-		// char id1  = |?
-		//		...
-		// char idN  = |?
-		void sendConnectInfoToPeers(const std::vector<Pair>& peers) const;
-		
-		int currentId_;
-		std::vector<Pair> peers_;
-		ENetAddress address_;
-		ENetHost* server_;
+    InternalPacket receive(ENetEvent eNetEvent) override;
 
-		std::thread thread_;
-		ServerInterface& serverInterface_;
-	};
+private:
+    typedef std::pair<ENetPeer *, int> Pair; // first: Peer second: id.
+
+    // Sends connectInfo to new connected client. Client is assigned
+    // the number id.
+    // char type = |CONNECT_INFO
+    // char id   = |id
+    // char id1  = |?
+    //		...
+    // char idN  = |?
+    void sendConnectInfoToPeers(const std::vector<Pair> &peers) const;
+
+    int currentId_;
+    std::vector<Pair> peers_;
+    ENetAddress address_;
+    ENetHost *server_;
+
+    std::thread thread_;
+    ServerInterface &serverInterface_;
+};
 
 } // Namespace mw.
 

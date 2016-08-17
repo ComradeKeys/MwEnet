@@ -10,28 +10,28 @@
 
 namespace mw {
 
-	class EnetClient : public EnetNetwork {
-	public:
-		EnetClient(int port, std::string ip);
-		~EnetClient();
+class EnetClient : public EnetNetwork {
+public:
+    EnetClient(int port, std::string ip);
+    ~EnetClient();
 
-		void start() override;
-		
-		void stop() override;
+    void start() override;
 
-	protected:
-		void update();
+    void stop() override;
 
-		InternalPacket receive(ENetEvent eNetEvent) override;
+protected:
+    void update();
 
-	private:
-		std::vector<int> ids_;
+    InternalPacket receive(ENetEvent eNetEvent) override;
 
-		ENetPeer* peer_;
-		ENetAddress address_;
-		ENetHost* client_;
-		std::thread thread_;
-	};
+private:
+    std::vector<int> ids_;
+
+    ENetPeer *peer_;
+    ENetAddress address_;
+    ENetHost *client_;
+    std::thread thread_;
+};
 
 } // Namespace mw.
 

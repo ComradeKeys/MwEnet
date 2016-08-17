@@ -17,7 +17,7 @@ if (MSVC)
 	
 	set(WINDOWS_ENET_DEPENDENCIES "ws2_32;winmm")
 else (MSVC)
-	set(CMAKE_CXX_FLAGS "-std=c++14")
+	set(CMAKE_CXX_FLAGS "-std=c++14 -pthread")
 endif (MSVC)
 
 
@@ -45,7 +45,7 @@ else() # ENet is FOUND
     "${CMAKE_SOURCE_DIR}/include/"
     ${ENet_INCLUDE_DIRS}
     )
-  add_library(MwEnet Enet ${SOURCES_MW})
+  add_library(${CMAKE_PROJECT_NAME} ${ENet_LIBRARY} ${SOURCES_MW})
 endif()
 
   target_link_libraries(${CMAKE_PROJECT_NAME} ${ENet_LIBRARY})

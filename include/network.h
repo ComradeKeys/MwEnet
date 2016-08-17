@@ -1,5 +1,4 @@
-#ifndef MW_NETWORK_H
-#define MW_NETWORK_H
+#pragma once
 
 #include "packet.h"
 
@@ -58,5 +57,3 @@ public:
 };
 
 } // Namespace mw.
-
-#endif // MW_NETWORK_H

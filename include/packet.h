@@ -1,5 +1,4 @@
-#ifndef MW_PACKET_H
-#define MW_PACKET_H
+#pragma once
 
 #include <array>
 #include <algorithm>
@@ -65,5 +64,3 @@ private:
 };
 
 } // Namespace mw.
-
-#endif // MW_PACKET_H

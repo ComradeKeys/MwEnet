@@ -1,5 +1,4 @@
-#ifndef MW_ENETSERVER_H
-#define MW_ENETSERVER_H
+#pragma once
 
 #include "enetnetwork.h"
 #include "server.h"
@@ -53,5 +52,3 @@ private:
 };
 
 } // Namespace mw.
-
-#endif // MW_ENETSERVER_H

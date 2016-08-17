@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     client.start();
 
     do {
+        // Send
         std::string msg;
         std::cin >> msg;
         if(msg == "quit" or msg == "exit") {
@@ -28,6 +29,11 @@ int main(int argc, char *argv[]) {
         }
         mw::Packet pkt(msg.c_str(), sizeof(char) * msg.length());
         client.pushToSendBuffer(pkt, mw::Network::RELIABLE);
+
+        // Receive
+        while(client.pullFromReceiveBuffer(pkt) not_eq 0) {
+            std::cout << "Msg: " << pkt.getData() << std::endl;
+        }
     } while(run);
 
     client.stop();

@@ -8,7 +8,6 @@ Roadmap for MwENet
   These header files (inside the include/ directory) still need to be documented, however documentation can always be improved
   - enetclient.h
   - enetserver.h
-  - localnetwork.h
   - packet.h
   - server.h
 

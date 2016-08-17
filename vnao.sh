@@ -16,8 +16,9 @@ astyle --style=attach \
     --break-after-logical \
     --lineend=linux \
     src/mw/*.cpp \
+    examples/01.ChatRoom/src/*.cpp \
     include/*.h 
 
-rm -rf src/*.orig include/*.orig
+rm -rf src/*.orig include/*.orig examples/01.ChatRoom/src/*.orig
 
 echo "I CAN'T READ THAT CODE!!!"

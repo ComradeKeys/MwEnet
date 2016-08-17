@@ -1,4 +1,10 @@
 #pragma once
+/**
+ * @file   localnetwork.h
+ * @Author Brigham Keys (bkeys@gnu.org)
+ * 
+ * Class that handles local connections
+ */
 
 #include "packet.h"
 #include "network.h"
@@ -9,27 +15,23 @@ namespace mw {
 
 class ServerInterface {
 public:
-    virtual ~ServerInterface() {
-    }
 
-    virtual void receiveToServer(const Packet &packet, int clientId) = 0;
-
-    virtual bool connectToServer(int clientId) = 0;
-
-    virtual void disconnectToServer(int clientId) = 0;
+  virtual void receiveToServer(const Packet &packet, int clientId) = 0; //!< Specifies how to process incoming packets
+  virtual bool connectToServer(int clientId) = 0; //!< Specifies how to connect to the server
+    virtual void disconnectToServer(int clientId) = 0; //!< Specifies how to disconnect to the server
 };
 
-// This class works as a server.
-// The server is responsible to give all client a unique value and
-// serves as a relay station which relays all data to and from clients.
+/*!
+ * This class works as a server.
+ * The server is responsible to give all client a unique value and
+ * serves as a relay station which relays all data to and from clients.
+ */
 class Server {
 public:
-    virtual ~Server() {
-    }
 
-    virtual void serverPushToSendBuffer(const Packet &packet, Network::PacketType type, int toId) = 0;
+    virtual void serverPushToSendBuffer(const Packet &packet, Network::PacketType type, int toId) = 0; //!< Specifies how to send a packet to a peer with the ID
 
-    virtual void serverPushToSendBuffer(const Packet &packet, Network::PacketType type) = 0;
+    virtual void serverPushToSendBuffer(const Packet &packet, Network::PacketType type) = 0; //!< Specifies how to broadcast a packet
 };
 
 } // Namespace mw.

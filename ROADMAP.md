@@ -8,10 +8,7 @@ Roadmap for MwENet
   These header files (inside the include/ directory) still need to be documented, however documentation can always be improved
   - enetclient.h
   - enetserver.h
-  - localnetwork.h
-  - network.h
   - packet.h
-  - server.h
 
 - A few interfaces might be broken, the wrapper should be written in such a way that if someone wants all the fine details of ENet exposed to them we can give it to them. The original README mentioned that this is not a complete wrapper for ENet so we should try to change that.
 

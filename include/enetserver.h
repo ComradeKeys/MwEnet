@@ -2,6 +2,7 @@
 /**
  * @file   enetserver.h
  * @Author Brigham Keys (bkeys@gnu.org)
+ * @todo   Stop connection which violates the protocol. in InternalPacket recieve
  * 
  * Derived class that has the networking components and is usable. It
  * Also serves as an example of what an implementation of all the 

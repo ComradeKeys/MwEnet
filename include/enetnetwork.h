@@ -1,18 +1,23 @@
-#ifndef MW_ENETNETWORK_H
-#define MW_ENETNETWORK_H
+#pragma once
+/**
+ * @file   enetnetwork.h
+ * @Author Brigham Keys (bkeys@gnu.org)
+ * @date   August, 2016
+ * @todo   Fix that packages cant be sent before a id is assigned to the client.
+ * 
+ * Uses enet for implementing usefull parts of the Network interface.
+ */
 
 #include "network.h"
 #include "packet.h"
 
 #include <enet/enet.h>
-
 #include <queue>
 #include <mutex>
 #include <condition_variable>
 
 namespace mw {
 
-// Uses enet for implementing usefull parts of the Network interface.
 class EnetNetwork : public Network {
 public:
     EnetNetwork(); //!< Increments the number of instances and calls enet_initialize
@@ -76,5 +81,3 @@ protected:
 };
 
 } // Namespace mw.
-
-#endif // MW_ENETNETWORK_H

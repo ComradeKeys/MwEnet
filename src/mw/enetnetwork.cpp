@@ -9,9 +9,6 @@
 #include <array>
 
 namespace mw {
-// ----------------------------------------------------------------------------
-// To do! Fix that packages cant be sent before a id is assigned to the client.
-// ----------------------------------------------------------------------------
 
 int EnetNetwork::nbrOfInstances = 0;
 

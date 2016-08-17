@@ -15,18 +15,18 @@ namespace mw {
 // Uses enet for implementing usefull parts of the Network interface.
 class EnetNetwork : public Network {
 public:
-    EnetNetwork();
+    EnetNetwork(); //!< Increments the number of instances and calls enet_initialize
     virtual ~EnetNetwork();
 
-    void pushToSendBuffer(const Packet &packet, PacketType type, int toId) override final;
+    void pushToSendBuffer(const Packet &packet, PacketType type, int toId) override final; //!< Push packet to buffer to be sent, specify ID of peer being sent to
 
-    void pushToSendBuffer(const Packet &packet, PacketType type) override final;
+    void pushToSendBuffer(const Packet &packet, PacketType type) override final; //!< Push packet to buffer to be sent
 
-    int pullFromReceiveBuffer(Packet &data) override final;
+    int pullFromReceiveBuffer(Packet &data) override final; //!< Pull packet from recieving buffer
 
-    int getId() const override final;
+    int getId() const override final; //!< gets ID of the peer
 
-    Status getStatus() const override final;
+    Status getStatus() const override final; //!< status of the peer on the network
 
 protected:
     enum EnetConnectionType {
@@ -50,10 +50,10 @@ protected:
             toId_ = toId;
         }
 
-        Packet data_;
-        int fromId_;
-        PacketType type_;
-        int toId_;
+        Packet data_; //!< Information stored in the internal packet
+        int fromId_; //!< ID of peer the packet came from
+        PacketType type_; //!< Whether the packet is reliable or unreliable
+        int toId_; //!< ID of client the packet is being sent to
     };
 
     virtual InternalPacket receive(ENetEvent eNetEvent) = 0;
@@ -62,17 +62,17 @@ protected:
     // 0 char type    |	EnetNetwork type.
     // 1 char id      |
     // 2 char data[N] |
-    static ENetPacket *createEnetPacket(const Packet &dataPacket, char fromId, PacketType type);
+    static ENetPacket *createEnetPacket(const Packet &dataPacket, char fromId, PacketType type); // Unpacks the Packet's data and returns the constructed ENet packet
 
     std::queue<InternalPacket> sendPackets_;
     std::queue<InternalPacket> receivePackets_;
 
-    int id_;
+    int id_; //!< Sets the fromId_ of packets being sent
     Status status_;
-    mutable std::mutex mutex_;
-    std::condition_variable condition_;
+    mutable std::mutex mutex_; //!< private mutex to handle order of operations regarding threading
+    std::condition_variable condition_; //!< Helps handle threading
 
-    static int nbrOfInstances;
+    static int nbrOfInstances; //!< How many ENet networks are currently spawned
 };
 
 } // Namespace mw.

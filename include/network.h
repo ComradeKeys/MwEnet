@@ -2,7 +2,7 @@
 /**
  * @file   network.h
  * @Author Brigham Keys (bkeys@gnu.org)
- * @todo   
+ * 
  * This class works as a multiuser system. Should be used
  * to control a server/client/local system.
  * The server is responsible to give all client a unique value and

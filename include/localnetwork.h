@@ -1,5 +1,4 @@
-#ifndef MW_LOCALNETWORK_H
-#define MW_LOCALNETWORK_H
+#pragma once
 
 #include "network.h"
 #include "server.h"
@@ -55,5 +54,3 @@ private:
 };
 
 } // Namespace mw.
-
-#endif // MW_LOCALNETWORK_H

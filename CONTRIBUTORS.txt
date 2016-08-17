@@ -1,0 +1,2 @@
+Marcus Welander - For writing the original MwEnet
+Brigham Keys - Refractored and documented the wrapper

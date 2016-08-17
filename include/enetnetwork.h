@@ -2,7 +2,6 @@
 /**
  * @file   enetnetwork.h
  * @Author Brigham Keys (bkeys@gnu.org)
- * @date   August, 2016
  * @todo   Fix that packages cant be sent before a id is assigned to the client.
  * 
  * Uses enet for implementing usefull parts of the Network interface.
@@ -23,9 +22,9 @@ public:
     EnetNetwork(); //!< Increments the number of instances and calls enet_initialize
     virtual ~EnetNetwork();
 
-    void pushToSendBuffer(const Packet &packet, PacketType type, int toId) override final; //!< Push packet to buffer to be sent, specify ID of peer being sent to
+    void pushToSendBuffer(const Packet &packet, PacketType type, int toId) override final; //!<  Copy buffer to send buffer. Assign the correct sender id.
 
-    void pushToSendBuffer(const Packet &packet, PacketType type) override final; //!< Push packet to buffer to be sent
+    void pushToSendBuffer(const Packet &packet, PacketType type) override final; //!< Push packet to buffer to be sent, without ID it will send to all clients so basically a broadcast
 
     int pullFromReceiveBuffer(Packet &data) override final; //!< Pull packet from recieving buffer
 

@@ -9,7 +9,6 @@ Roadmap for MwENet
   - enetclient.h
   - enetserver.h
   - localnetwork.h
-  - network.h
   - packet.h
   - server.h
 

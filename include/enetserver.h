@@ -1,4 +1,13 @@
 #pragma once
+/**
+ * @file   enetserver.h
+ * @Author Brigham Keys (bkeys@gnu.org)
+ * @todo   Stop connection which violates the protocol. in InternalPacket recieve
+ * 
+ * Derived class that has the networking components and is usable. It
+ * Also serves as an example of what an implementation of all the 
+ * pure virtual functions look like
+ */
 
 #include "enetnetwork.h"
 #include "server.h"
@@ -38,12 +47,12 @@ private:
     // char type = |CONNECT_INFO
     // char id   = |id
     // char id1  = |?
-    //		...
+     //		...
     // char idN  = |?
     void sendConnectInfoToPeers(const std::vector<Pair> &peers) const;
 
     int currentId_; //!< The id to be assigned to the next connected client.
-    std::vector<Pair> peers_;
+    std::vector<Pair> peers_; //!< container for information about all connected peers
     ENetAddress address_; //!< Address of the server on the network
     ENetHost *server_; //!< ENet server host
 

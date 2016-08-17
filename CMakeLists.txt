@@ -17,7 +17,7 @@ if (MSVC)
 	
 	set(WINDOWS_ENET_DEPENDENCIES "ws2_32;winmm")
 else (MSVC)
-	set(CMAKE_CXX_FLAGS "-std=c++11")
+	set(CMAKE_CXX_FLAGS "-std=c++14")
 endif (MSVC)
 
 
@@ -26,16 +26,9 @@ option(BUILD_EXAMPLES "Compile examples using MwENet" ON)
 # Source files.
 set(SOURCES_MW
 	src/mw/enetclient.cpp
-	src/mw/enetclient.h
 	src/mw/enetnetwork.cpp
-	src/mw/enetnetwork.h
-	src/mw/network.h
-	src/mw/packet.h
 	src/mw/enetserver.cpp
-	src/mw/enetserver.h
 	src/mw/localnetwork.cpp
-	src/mw/localnetwork.h
-	src/mw/server.h
 )
 # End of source files.
 
@@ -48,7 +41,10 @@ if(ENet_NOT_FOUND)
   add_library(MwEnet Enet ${SOURCES_MW})
 else() # ENet is FOUND
   message("-- ENet was found!")
-  include_directories(SYSTEM ${ENet_INCLUDE_DIRS})  
+  include_directories(SYSTEM
+    "${CMAKE_SOURCE_DIR}/include/"
+    ${ENet_INCLUDE_DIRS}
+    )
   add_library(MwEnet Enet ${SOURCES_MW})
 endif()
 

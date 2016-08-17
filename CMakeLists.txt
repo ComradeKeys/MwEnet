@@ -35,8 +35,8 @@ set(SOURCES_MW
 find_package(ENet)
 
 if(ENet_NOT_FOUND)
-  add_subdirectory(Enet)
-  include_directories(Enet/src)
+  add_subdirectory(third/partyEnet)
+  include_directories(thirdparty/Enet/src)
   set(${ENet_LIBRARY} Enet)
   add_library(MwEnet Enet ${SOURCES_MW})
 else() # ENet is FOUND

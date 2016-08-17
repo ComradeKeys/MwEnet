@@ -9,7 +9,6 @@ Roadmap for MwENet
   - enetclient.h
   - enetserver.h
   - packet.h
-  - server.h
 
 - A few interfaces might be broken, the wrapper should be written in such a way that if someone wants all the fine details of ENet exposed to them we can give it to them. The original README mentioned that this is not a complete wrapper for ENet so we should try to change that.
 

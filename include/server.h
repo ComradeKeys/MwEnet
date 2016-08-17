@@ -3,7 +3,7 @@
  * @file   localnetwork.h
  * @Author Brigham Keys (bkeys@gnu.org)
  * 
- * Class that handles local connections
+ * Abstract class that specifies the interfaces needed from a server
  */
 
 #include "packet.h"

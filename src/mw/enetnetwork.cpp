@@ -16,7 +16,7 @@ EnetNetwork::EnetNetwork() {
     // a. Initialize enet
     if(nbrOfInstances < 1) {
         ++nbrOfInstances;
-        if(enet_initialize() != 0) {
+        if(enet_initialize() not_eq  0) {
             fprintf(stderr, "An error occured while initializing ENet.\n");
             //return EXIT_FAILURE;
         }

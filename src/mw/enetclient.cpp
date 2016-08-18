@@ -20,10 +20,10 @@ EnetClient::~EnetClient() {
         thread_.join();
     }
 
-    if(peer_ != 0) {
+    if(peer_ not_eq  0) {
         enet_peer_reset(peer_);
     }
-    if(client_ != 0) {
+    if(client_ not_eq  0) {
         enet_host_destroy(client_);
     }
 }
@@ -66,7 +66,7 @@ void EnetClient::stop() {
     std::lock_guard<std::mutex> lock(mutex_);
     if(status_ == ACTIVE) {
         status_ = DISCONNECTING;
-        if(peer_ != 0) {
+        if(peer_ not_eq  0) {
             enet_peer_disconnect(peer_, 0);
         }
     }
@@ -76,11 +76,11 @@ void EnetClient::update() {
     mutex_.lock();
     Status tmp = status_;
     mutex_.unlock();
-    while(tmp != NOT_ACTIVE) {
+    while(tmp not_eq  NOT_ACTIVE) {
         mutex_.lock();
         ENetEvent eNetEvent;
         int eventStatus = 0;
-        while(status_ != NOT_ACTIVE and
+        while(status_ not_eq  NOT_ACTIVE and
                 (eventStatus = enet_host_service(client_, &eNetEvent, 0)) > 0) {
             switch(eNetEvent.type) {
                 case ENET_EVENT_TYPE_CONNECT:
@@ -88,7 +88,7 @@ void EnetClient::update() {
                     peer_ = eNetEvent.peer;
                     break;
                 case ENET_EVENT_TYPE_RECEIVE:
-                    if(status_ != NOT_ACTIVE) {
+                    if(status_ not_eq  NOT_ACTIVE) {
                         // Add to receive buffer.
                         InternalPacket iPacket = receive(eNetEvent);
                         if(iPacket.data_.size() > 0) {
@@ -114,7 +114,7 @@ void EnetClient::update() {
 
         // Send all packets in send buffert to all clients.
         // Must been assinged id and got a connection and not active
-        while(id_ != -1 and id_ != 0 and peer_ != 0 and status_ != NOT_ACTIVE and !sendPackets_.empty()) {
+        while(id_ not_eq  -1 and id_ not_eq  0 and peer_ not_eq  0 and status_ not_eq  NOT_ACTIVE and !sendPackets_.empty()) {
             InternalPacket iPacket = sendPackets_.front();
 
             ENetPacket *eNetPacket = createEnetPacket(iPacket.data_, iPacket.toId_, iPacket.type_); // id is set to be the client which will receive it. id = 0 means every client.
@@ -130,7 +130,7 @@ void EnetClient::update() {
 
         // The client is not active? Or disconnecting is finished?
         if(status_ == NOT_ACTIVE or status_ == DISCONNECTING) {
-            if(peer_ != 0) {
+            if(peer_ not_eq  0) {
                 enet_peer_reset(peer_);
                 peer_ = 0;
             }

@@ -6,11 +6,11 @@
 
 namespace mw {
 
-EnetClient::EnetClient(int port, std::string ip) {
+  EnetClient::EnetClient(int port, std::string ip, int id) {
     status_ = NOT_ACTIVE;
     enet_address_set_host(&address_, ip.c_str());
     address_.port = port;
-    id_ = -1;
+    id_ = id;
     peer_ = 0;
 }
 
@@ -33,14 +33,14 @@ void EnetClient::start() {
     if(status_ == NOT_ACTIVE) {
         status_ = ACTIVE;
 
-        id_ = -1;
+	//        id_ = -1;
         peer_ = 0;
 
         // Remove old package.
-        while(!sendPackets_.empty()) {
+        while(not sendPackets_.empty()) {
             sendPackets_.pop();
         }
-        while(!receivePackets_.empty()) {
+        while(not receivePackets_.empty()) {
             receivePackets_.pop();
         }
 
@@ -55,7 +55,7 @@ void EnetClient::start() {
         peer_ = enet_host_connect(client_, &address_, 2, 0);
 
         if(peer_ == 0) {
-            std::cerr << "No available peers for initializing an ENet connection" << std::endl;
+            std::cout << "No available peers for initializing an ENet connection" << std::endl;
             exit(EXIT_FAILURE);
         }
         thread_ = std::thread(&EnetClient::update, this);
@@ -76,7 +76,7 @@ void EnetClient::update() {
     mutex_.lock();
     Status tmp = status_;
     mutex_.unlock();
-    while(tmp not_eq  NOT_ACTIVE) {
+    while(tmp == ACTIVE) {
         mutex_.lock();
         ENetEvent eNetEvent;
         int eventStatus = 0;
@@ -86,6 +86,9 @@ void EnetClient::update() {
                 case ENET_EVENT_TYPE_CONNECT:
                     printf("(Client) We got a new connection from %x\n", eNetEvent.peer->address.host);
                     peer_ = eNetEvent.peer;
+		    if(peer_ == 0) {
+		      puts("Something went wrong at connection time");
+		    }
                     break;
                 case ENET_EVENT_TYPE_RECEIVE:
                     if(status_ not_eq  NOT_ACTIVE) {
@@ -112,9 +115,36 @@ void EnetClient::update() {
             }
         }
 
+	/*
+	std::cout << id_ << std::endl;
+	puts("------------------START CHECK----------------------");
+	if(id_ not_eq  -1) {
+	  puts("1. id_ not_eq -1");
+	}
+	if(id_ not_eq  0) {
+	  puts("2. id_ not_eq 0");
+	}
+	if(peer_ not_eq  0) {
+	  puts("3. peer_ not_eq  0");
+	}
+	if(status_ not_eq  NOT_ACTIVE) {
+	  puts("4. status_ not_eq  NOT_ACTIVE");
+	}
+	if(not sendPackets_.empty()) {
+	  puts("5. not sendPackets_.empty()");
+	}
+	puts("--------------------END CHECK----------------------\n");
+*/
+
         // Send all packets in send buffert to all clients.
         // Must been assinged id and got a connection and not active
-        while(id_ not_eq  -1 and id_ not_eq  0 and peer_ not_eq  0 and status_ not_eq  NOT_ACTIVE and !sendPackets_.empty()) {
+        while(id_ not_eq  -1
+	      and id_ not_eq  0
+	      and peer_ not_eq  0
+	      and status_ == ACTIVE
+	      and not sendPackets_.empty()) {
+
+            puts("Client is active");
             InternalPacket iPacket = sendPackets_.front();
 
             ENetPacket *eNetPacket = createEnetPacket(iPacket.data_, iPacket.toId_, iPacket.type_); // id is set to be the client which will receive it. id = 0 means every client.

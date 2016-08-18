@@ -21,7 +21,7 @@ public:
      * @param[in] port The server's port to which the client should connect to.
      * @param[in] ip An IP address to which the clien tshould connect.
      */
-    EnetClient(int port, std::string ip);
+    EnetClient(int port, std::string ip, int id);
     ~EnetClient();
 
     /**

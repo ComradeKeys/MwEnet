@@ -3,14 +3,19 @@
 #include <network.h>
 #include <packet.h>
 #include <thread>
+#include <time.h>
+#include <stdlib.h>
+#include <math.h>
 
 bool run;
 
 int main(int argc, char *argv[]) {
+  srand(time(NULL));
     std::string ip = "localhost";
     int port = 12345;
-
-    mw::EnetClient client(port, ip);
+    int id   = abs(rand() % 50);
+    std::cout << "ID should be " << id << std::endl;
+    mw::EnetClient client(port, ip, id);
 
     run = true;
     client.start();

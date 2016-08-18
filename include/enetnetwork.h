@@ -19,18 +19,18 @@ namespace mw {
 
 class EnetNetwork : public Network {
 public:
-    EnetNetwork(); //!< Increments the number of instances and calls enet_initialize
+    EnetNetwork(); //not < Increments the number of instances and calls enet_initialize
     virtual ~EnetNetwork();
 
-    void pushToSendBuffer(const Packet &packet, PacketType type, int toId) override final; //!<  Copy buffer to send buffer. Assign the correct sender id.
+    void pushToSendBuffer(const Packet &packet, PacketType type, int toId) override final; //not <  Copy buffer to send buffer. Assign the correct sender id.
 
-    void pushToSendBuffer(const Packet &packet, PacketType type) override final; //!< Push packet to buffer to be sent, without ID it will send to all clients so basically a broadcast
+    void pushToSendBuffer(const Packet &packet, PacketType type) override final; //not < Push packet to buffer to be sent, without ID it will send to all clients so basically a broadcast
 
-    int pullFromReceiveBuffer(Packet &data) override final; //!< Pull packet from recieving buffer
+    int pullFromReceiveBuffer(Packet &data) override final; //not < Pull packet from recieving buffer
 
-    int getId() const override final; //!< gets ID of the peer
+    int getId() const override final; //not < gets ID of the peer
 
-    Status getStatus() const override final; //!< status of the peer on the network
+    Status getStatus() const override final; //not < status of the peer on the network
 
 protected:
     enum EnetConnectionType {
@@ -54,10 +54,10 @@ protected:
             toId_ = toId;
         }
 
-        Packet data_; //!< Information stored in the internal packet
-        int fromId_; //!< ID of peer the packet came from
-        PacketType type_; //!< Whether the packet is reliable or unreliable
-        int toId_; //!< ID of client the packet is being sent to
+        Packet data_; //not < Information stored in the internal packet
+        int fromId_; //not < ID of peer the packet came from
+        PacketType type_; //not < Whether the packet is reliable or unreliable
+        int toId_; //not < ID of client the packet is being sent to
     };
 
     virtual InternalPacket receive(ENetEvent eNetEvent) = 0;
@@ -71,12 +71,12 @@ protected:
     std::queue<InternalPacket> sendPackets_;
     std::queue<InternalPacket> receivePackets_;
 
-    int id_; //!< Sets the fromId_ of packets being sent
+    int id_; //not < Sets the fromId_ of packets being sent
     Status status_;
-    mutable std::mutex mutex_; //!< private mutex to handle order of operations regarding threading
-    std::condition_variable condition_; //!< Helps handle threading
+    mutable std::mutex mutex_; //not < private mutex to handle order of operations regarding threading
+    std::condition_variable condition_; //not < Helps handle threading
 
-    static int nbrOfInstances; //!< How many ENet networks are currently spawned
+    static int nbrOfInstances; //not < How many ENet networks are currently spawned
 };
 
 } // Namespace mw.

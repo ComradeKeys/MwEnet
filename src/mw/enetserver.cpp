@@ -103,7 +103,7 @@ void EnetServer::update() {
     while(status_ != NOT_ACTIVE) {
         ENetEvent eNetEvent;
         int eventStatus = 0;
-        while(status_ != NOT_ACTIVE &&
+        while(status_ != NOT_ACTIVE and
                 (eventStatus = enet_host_service(server_, &eNetEvent, 0)) > 0) {
             switch(eNetEvent.type) {
                 case ENET_EVENT_TYPE_CONNECT:
@@ -190,7 +190,7 @@ void EnetServer::update() {
                     }
 
                     // When all peers is disconnected, then clean up.
-                    if(status_ == DISCONNECTING && peers_.size() == 0) {
+                    if(status_ == DISCONNECTING and peers_.size() == 0) {
                         eNetEvent.peer->data = NULL;
                         status_ = NOT_ACTIVE;
                     }
@@ -204,7 +204,7 @@ void EnetServer::update() {
         }
 
         // Send all packets in send buffer to all clients.
-        while(status_ != NOT_ACTIVE && !sendPackets_.empty()) {
+        while(status_ != NOT_ACTIVE and !sendPackets_.empty()) {
             InternalPacket &iPacket = sendPackets_.front();
 
             // Data to send? And data through the filter is allowed to be sent?
@@ -239,7 +239,7 @@ void EnetServer::update() {
         enet_host_flush(server_);
 
         // The server is not active? Or the disconnection is finish?
-        if(status_ == NOT_ACTIVE || (status_ == DISCONNECTING && peers_.size() == 0)) {
+        if(status_ == NOT_ACTIVE or (status_ == DISCONNECTING and peers_.size() == 0)) {
             enet_host_destroy(server_);
             server_ = 0;
             status_ = NOT_ACTIVE;

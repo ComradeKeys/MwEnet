@@ -80,7 +80,7 @@ void EnetClient::update() {
         mutex_.lock();
         ENetEvent eNetEvent;
         int eventStatus = 0;
-        while(status_ != NOT_ACTIVE &&
+        while(status_ != NOT_ACTIVE and
                 (eventStatus = enet_host_service(client_, &eNetEvent, 0)) > 0) {
             switch(eNetEvent.type) {
                 case ENET_EVENT_TYPE_CONNECT:
@@ -114,7 +114,7 @@ void EnetClient::update() {
 
         // Send all packets in send buffert to all clients.
         // Must been assinged id and got a connection and not active
-        while(id_ != -1 && id_ != 0 && peer_ != 0 && status_ != NOT_ACTIVE && !sendPackets_.empty()) {
+        while(id_ != -1 and id_ != 0 and peer_ != 0 and status_ != NOT_ACTIVE and !sendPackets_.empty()) {
             InternalPacket iPacket = sendPackets_.front();
 
             ENetPacket *eNetPacket = createEnetPacket(iPacket.data_, iPacket.toId_, iPacket.type_); // id is set to be the client which will receive it. id = 0 means every client.
@@ -129,7 +129,7 @@ void EnetClient::update() {
         }
 
         // The client is not active? Or disconnecting is finished?
-        if(status_ == NOT_ACTIVE || status_ == DISCONNECTING) {
+        if(status_ == NOT_ACTIVE or status_ == DISCONNECTING) {
             if(peer_ != 0) {
                 enet_peer_reset(peer_);
                 peer_ = 0;

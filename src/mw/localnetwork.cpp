@@ -38,7 +38,7 @@ void LocalNetwork::pushToSendBuffer(const Packet &packet, PacketType type) {
 void LocalNetwork::serverPushToSendBuffer(const Packet &packet, Network::PacketType type, int toId) {
     pushToSendBuffer(packet, type, toId, true);
     // Must be sent to the local client, or to everybody which is the same as the local client.
-    assert(toId == 0 || toId == getId());
+    assert(toId == 0 or toId == getId());
 }
 
 void LocalNetwork::serverPushToSendBuffer(const Packet &packet, Network::PacketType type) {

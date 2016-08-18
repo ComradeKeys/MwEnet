@@ -15,6 +15,7 @@ class ChatInterface : public mw::ServerInterface {
 
     bool connectToServer(int clientId) {
         std::cout << "The server got a new connection at " << clientId << std::endl;
+	return true;
     }
 
     void disconnectToServer(int clientId) {

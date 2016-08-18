@@ -107,7 +107,7 @@ void EnetServer::update() {
                 (eventStatus = enet_host_service(server_, &eNetEvent, 0)) > 0) {
             switch(eNetEvent.type) {
                 case ENET_EVENT_TYPE_CONNECT:
-                    //printf("(Server) We got a new connection from %x\n",eNetEvent.peer->address.host);
+                    printf("(Server) We got a new connection from %x\n",eNetEvent.peer->address.host);
                     if(status_ not_eq  DISCONNECTING) {
                         // Signal the client that a new client is connected!
                         // Is the connection accepted?
@@ -134,6 +134,7 @@ void EnetServer::update() {
                     }
                     break;
                 case ENET_EVENT_TYPE_RECEIVE:
+		      puts("got a packet. woop.");
                     if(status_ not_eq  NOT_ACTIVE) {
                         InternalPacket iPacket = receive(eNetEvent);
 
@@ -204,7 +205,7 @@ void EnetServer::update() {
         }
 
         // Send all packets in send buffer to all clients.
-        while(status_ not_eq  NOT_ACTIVE and !sendPackets_.empty()) {
+        while(status_ not_eq  NOT_ACTIVE and not sendPackets_.empty()) {
             InternalPacket &iPacket = sendPackets_.front();
 
             // Data to send? And data through the filter is allowed to be sent?

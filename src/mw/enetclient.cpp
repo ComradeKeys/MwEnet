@@ -144,7 +144,7 @@ void EnetClient::update() {
 	      and status_ == ACTIVE
 	      and not sendPackets_.empty()) {
 
-            puts("Client is active");
+            puts("Sending packet . . .");
             InternalPacket iPacket = sendPackets_.front();
 
             ENetPacket *eNetPacket = createEnetPacket(iPacket.data_, iPacket.toId_, iPacket.type_); // id is set to be the client which will receive it. id = 0 means every client.
